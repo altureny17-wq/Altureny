@@ -62,10 +62,7 @@ android {
         versionCode 21
         versionName "1.20"
         resConfigs "en" 
-    }
-    packagingOptions {
-        pickFirst '**/ic_launcher.png'
-        pickFirst '**/ic_launcher_round.png'
+
     }
     
     buildTypes {
@@ -75,6 +72,12 @@ android {
             minifyEnabled false
             shrinkResources false
             signingConfig signingConfigs.debug
+        }
+        
+     packagingOptions {
+        pickFirst '**/ic_launcher.png'
+        pickFirst '**/ic_launcher_round.png' 
+
         }
     }
 }
