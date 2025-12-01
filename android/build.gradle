@@ -1,0 +1,78 @@
+buildscript {
+    ext.kotlin_version = '2.1.0'
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.9.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.4.2'
+    }
+}
+
+allprojects {
+    tasks.withType(JavaCompile).configureEach {
+        options.deprecation = true
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    afterEvaluate { project ->
+        if (project.hasProperty('android')) {
+            project.android {
+                if (namespace == null) {
+                    namespace project.group
+                }
+            }
+        }
+    }
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    afterEvaluate({ project ->
+        if (project.getPlugins().hasPlugin('android') ||
+                project.getPlugins().hasPlugin('android-library')) {
+            project.configure(project.android) {
+                compileSdkVersion 36
+                buildToolsVersion "34.0.0"
+                packagingOptions {
+                    pickFirst 'lib/x86/libc++_shared.so'
+                    pickFirst 'lib/x86_64/libc++_shared.so'
+                    pickFirst 'lib/armeabi-v7a/libc++_shared.so'
+                    pickFirst 'lib/arm64-v8a/libc++_shared.so'
+                }
+            }
+        }
+    })
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
+subprojects {
+    project.configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            // القواعد القديمة (لمعالجة androidx)
+            if (details.requested.group == 'androidx.core' && details.requested.name == 'core') {
+                details.useVersion "1.15.0"
+            }
+            if (details.requested.group == 'androidx.activity' && details.requested.name == 'activity') {
+                details.useVersion "1.9.3"
+            }
+            // القاعدة الجديدة (لمعالجة Google Ads)
+            if (details.requested.group == 'com.google.android.gms' && details.requested.name.contains('play-services-ads-lite')) {
+                details.useVersion "22.4.0" // إجبار على إصدار مستقر
+            }
+        }
+    }
+}
