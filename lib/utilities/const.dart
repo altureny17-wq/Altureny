@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-const String appName = "Chatter";
-const String baseURL = "https://yourDomain.com/";
+const String appName = "juodylive";
+const String baseURL = "https://juodylive.thsite.top/";
 const String itemBaseURL = "";
 const String apiURL = "${baseURL}api/";
 const String termsURL = "${baseURL}termsOfUse";
