@@ -8,7 +8,7 @@
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:label="Chatter"
+        android:label="juodylive"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".untitled.MainActivity"
