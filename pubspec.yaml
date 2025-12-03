@@ -30,11 +30,11 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependency_overrides:
   package_info_plus: ^8.2.0
-  super_native_extensions:
-    git:
-      url: https://github.com/superlistapp/super_native_extensions.git
-      ref: refs/pull/525/head
-      path: super_native_extensions
+  #super_native_extensions:
+    #git:
+     # url: https://github.com/superlistapp/super_native_extensions.git
+     # ref: refs/pull/525/head
+    #  path: super_native_extensions
   irondash_engine_context:
     git:
       url: https://github.com/irondash/irondash.git
